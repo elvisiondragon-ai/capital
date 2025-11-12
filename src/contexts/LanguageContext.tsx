@@ -17,11 +17,11 @@ const translations: Record<string, Record<Language, string>> = {
   'nav.profile': { en: 'Profile', id: 'Profil' },
   
   // Home Page
-  'home.title': { en: 'EL VISION BANK', id: 'EL VISION BANK' },
+  'home.title': { en: 'EL VISION CAPITAL', id: 'EL VISION CAPITAL' },
   'home.tagline': { en: 'High Return Begins With Inner Stability', id: 'Keuntungan Tinggi Dimulai dari Ketenangan Batin' },
   'home.description': { 
-    en: 'EL VISION BANK manages wealth through diversity and mental clarity. Our hedge fund merges psychology and finance for true stability.',
-    id: 'EL VISION BANK mengelola kekayaan melalui diversitas dan kejernihan mental. Dana lindung nilai kami menggabungkan psikologi dan keuangan untuk stabilitas sejati.'
+    en: 'EL VISION CAPITAL manages wealth through diversity and mental clarity. Our hedge fund merges psychology and finance for true stability.',
+    id: 'EL VISION CAPITAL mengelola kekayaan melalui diversitas dan kejernihan mental. Dana lindung nilai kami menggabungkan psikologi dan keuangan untuk stabilitas sejati.'
   },
   'home.invest': { en: 'Invest Now', id: 'Investasi Sekarang' },
   'home.learn': { en: 'Learn How It Works', id: 'Pelajari Cara Kerjanya' },

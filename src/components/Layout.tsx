@@ -32,9 +32,9 @@ export default function Layout({ children }: LayoutProps) {
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between px-4">
           <Link to="/" className="flex items-center gap-3 group">
-            <img src={logo} alt="EL VISION BANK" className="h-10 w-10 transition-transform group-hover:scale-110" />
+            <img src={logo} alt="EL VISION CAPITAL" className="h-10 w-10 transition-transform group-hover:scale-110" />
             <span className="text-xl font-bold bg-gradient-gold bg-clip-text text-transparent">
-              EL VISION BANK
+              EL VISION CAPITAL
             </span>
           </Link>
           
