@@ -1,30 +1,376 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="theme-color" content="#1a1a1a" />
-    <title>eL Vision Capital - High Return Begins With Inner Stability</title>
-    <meta name="description" content="eL Vision Capital manages wealth through diversity and mental clarity. Our hedge fund merges psychology and finance for true stability." />
-    <meta name="author" content="eL Vision Capital" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EL VISION CAPITAL - High Return Business</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="icon" href="/favicon.webp">
+    <style>
+        [x-cloak] { display: none !important; }
+        
+        :root {
+            --primary: 45 93% 47%;
+            --primary-foreground: 0 0% 100%;
+            --card: 240 10% 3.9%;
+            --border: 45 20% 90%;
+        }
 
-    <meta property="og:title" content="eL Vision Capital - Luxury Hedge Fund & Mental Training" />
-    <meta property="og:description" content="High Return Begins With Inner Stability. Join elite investors who master both finance and mindfulness." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://capital.elvisiongroup.com/opengraph-image-p98pqg.png" />
+        body {
+            background-color: #020617;
+            color: white;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="eL Vision Capital" />
-    <meta name="twitter:description" content="Luxury hedge fund combining psychology and finance" />
-    <meta name="twitter:image" content="https://capital.elvisiongroup.com/opengraph-image-p98pqg.png" />
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  </head>
+        .bg-gradient-luxury {
+            background: linear-gradient(to bottom right, #020617, #0f172a, #020617);
+        }
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+        .bg-gradient-gold {
+            background: linear-gradient(135deg, #b45309, #d97706, #f59e0b, #d97706, #b45309);
+        }
+
+        .bg-gradient-card {
+            background: linear-gradient(to bottom right, rgba(30, 41, 59, 0.5), rgba(15, 23, 42, 0.5));
+            backdrop-filter: blur(10px);
+        }
+
+        .shadow-gold {
+            box-shadow: 0 10px 40px -10px rgba(217, 119, 6, 0.3);
+        }
+
+        .bg-gradient-gold-text {
+            background: linear-gradient(135deg, #b45309, #f59e0b, #b45309);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 5px rgba(245, 158, 11, 0.5)); }
+            50% { filter: drop-shadow(0 0 20px rgba(245, 158, 11, 0.8)); }
+        }
+
+        .animate-glow {
+            animation: glow 3s infinite ease-in-out;
+        }
+
+        @keyframes flow {
+            0% { transform: translateX(-100vw) translateY(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateX(100vw) translateY(50vh); opacity: 0; }
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: flow linear infinite;
+            box-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
+            pointer-events: none;
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body x-data="app()" x-init="init()" class="min-h-screen overflow-x-hidden">
+    <!-- Stardust Background -->
+    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden" id="stars"></div>
+    <div class="fixed inset-0 z-0 bg-gradient-luxury opacity-90 pointer-events-none"></div>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-black/50 backdrop-blur-md border-b border-yellow-500/10">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div @click="page = 'home'" class="flex items-center gap-2 cursor-pointer">
+                <i data-lucide="shield" class="w-8 h-8 text-yellow-500"></i>
+                <span class="font-bold text-xl tracking-tighter bg-gradient-gold-text">CAPITAL</span>
+            </div>
+            
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center gap-8">
+                <template x-for="item in navItems" :key="item.key">
+                    <button @click="page = item.key" 
+                            class="text-sm font-medium transition-colors hover:text-yellow-500"
+                            :class="page === item.key ? 'text-yellow-500' : 'text-gray-400'"
+                            x-text="t('nav.' + item.key)"></button>
+                </template>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button @click="toggleLang()" class="text-xs font-bold border border-yellow-500/20 px-2 py-1 rounded hover:bg-yellow-500/10 transition-colors">
+                    <span x-text="lang === 'en' ? 'ID' : 'EN'"></span>
+                </button>
+                <button @click="mobileMenu = !mobileMenu" class="md:hidden">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div x-show="mobileMenu" x-cloak class="fixed inset-0 z-40 bg-black md:hidden">
+        <div class="flex flex-col items-center justify-center h-full space-y-8">
+            <template x-for="item in navItems" :key="item.key">
+                <button @click="page = item.key; mobileMenu = false" 
+                        class="text-2xl font-bold"
+                        :class="page === item.key ? 'text-yellow-500' : 'text-gray-400'"
+                        x-text="t('nav.' + item.key)"></button>
+            </template>
+            <button @click="mobileMenu = false" class="p-4 rounded-full border border-yellow-500/20">
+                <i data-lucide="x" class="w-8 h-8"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="relative z-10 w-full pt-10 pb-20">
+        
+        <!-- Home Page -->
+        <div x-show="page === 'home'" class="animate-fade-in-up px-6 text-center max-w-4xl mx-auto space-y-10">
+            <div class="space-y-6">
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black bg-gradient-gold-text tracking-tighter" x-text="t('home.title')"></h1>
+                <p class="text-xl md:text-2xl italic text-gray-300 font-serif" x-text="'&quot;' + t('home.tagline') + '&quot;'"></p>
+                <p class="text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto" x-text="t('home.description')"></p>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button @click="page = 'tiers'" class="px-10 py-4 bg-gradient-gold rounded-full font-bold text-lg shadow-gold hover:scale-105 transition-transform" x-text="t('home.invest')"></button>
+                <button @click="page = 'training'" class="px-10 py-4 border-2 border-yellow-500 text-yellow-500 rounded-full font-bold text-lg hover:bg-yellow-500/10 transition-all" x-text="t('home.learn')"></button>
+            </div>
+        </div>
+
+        <!-- Tiers Page -->
+        <div x-show="page === 'tiers'" x-cloak class="animate-fade-in-up px-6 max-w-6xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 bg-gradient-gold-text" x-text="t('tiers.title')"></h2>
+            <div class="grid md:grid-cols-3 gap-6 mb-12">
+                <template x-for="tier in tiers" :key="tier.id">
+                    <div class="bg-gradient-card border border-yellow-500/20 p-8 rounded-3xl text-center group hover:border-yellow-500 transition-all cursor-pointer shadow-xl">
+                        <div class="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:animate-glow">
+                            <i :data-lucide="tier.icon" class="w-8 h-8 text-yellow-500"></i>
+                        </div>
+                        <h3 class="text-xl text-yellow-500 font-bold mb-2" x-text="t('tiers.tier' + tier.id)"></h3>
+                        <p class="text-3xl font-black mb-4" x-text="t('tiers.return' + tier.id)"></p>
+                        <p class="text-gray-400 text-sm" x-text="t('tiers.desc' + tier.id)"></p>
+                    </div>
+                </template>
+            </div>
+            <div class="bg-yellow-500/5 border border-yellow-500/20 rounded-2xl p-6 mb-12 text-center text-gray-400 leading-relaxed max-w-3xl mx-auto" x-text="t('tiers.note')"></div>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button @click="alert('Investment process started')" class="px-8 py-3 bg-gradient-gold rounded-full font-bold shadow-gold hover:scale-105 transition-transform" x-text="t('tiers.investBtn')"></button>
+                <button @click="page = 'training'" class="px-8 py-3 border border-yellow-500 text-yellow-500 rounded-full font-bold hover:bg-yellow-500/10 transition-all" x-text="t('tiers.trainingBtn')"></button>
+            </div>
+        </div>
+
+        <!-- Training Page -->
+        <div x-show="page === 'training'" x-cloak class="animate-fade-in-up px-6 max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-8 bg-gradient-gold-text" x-text="t('training.title')"></h2>
+            <p class="text-xl text-gray-300 leading-relaxed mb-12" x-text="t('training.description')"></p>
+            
+            <div class="card-glow p-10 rounded-3xl mb-12">
+                <i data-lucide="flame" class="w-16 h-16 text-yellow-500 mx-auto mb-6 animate-glow"></i>
+                <p class="text-2xl font-serif italic mb-4" x-text="'&quot;' + t('training.quote') + '&quot;'"></p>
+                <p class="text-yellow-500 font-bold" x-text="t('training.quoteAuthor')"></p>
+            </div>
+            
+            <button @click="page = 'assessment'" class="px-10 py-4 bg-gradient-gold rounded-full font-bold text-lg shadow-gold hover:scale-105 transition-transform" x-text="t('training.start')"></button>
+        </div>
+
+        <!-- Assessment Page -->
+        <div x-show="page === 'assessment'" x-cloak class="animate-fade-in-up px-6 max-w-4xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 bg-gradient-gold-text" x-text="t('assessment.title')"></h2>
+            <div class="space-y-8 mb-12">
+                <template x-for="item in ['assessment.emotional', 'assessment.focus', 'assessment.clarity']" :key="item">
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <label class="font-bold text-lg" x-text="t(item)"></label>
+                            <span class="text-yellow-500 font-mono text-xl">85%</span>
+                        </div>
+                        <div class="h-2 bg-gray-800 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-gold" style="width: 85%"></div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+            <div class="text-center">
+                <p class="text-gray-400 italic mb-8" x-text="t('assessment.reminder')"></p>
+                <button @click="alert('Assessment complete')" class="px-10 py-4 bg-gradient-gold rounded-full font-bold text-lg shadow-gold" x-text="t('assessment.submit')"></button>
+            </div>
+        </div>
+
+        <!-- Profile Page -->
+        <div x-show="page === 'profile'" x-cloak class="animate-fade-in-up px-6 max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <div class="w-24 h-24 bg-gradient-gold rounded-full flex items-center justify-center mx-auto mb-6 shadow-gold">
+                    <i data-lucide="user" class="w-12 h-12 text-black"></i>
+                </div>
+                <h2 class="text-3xl font-bold mb-2">Investor Visionary</h2>
+                <p class="text-gray-400"><span x-text="t('profile.tier')"></span>: <span class="text-yellow-500 font-bold">Tier 2</span></p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 mb-12">
+                <div class="bg-gradient-card border border-yellow-500/10 p-8 rounded-3xl">
+                    <div class="flex items-center gap-2 text-yellow-500 mb-6">
+                        <i data-lucide="trending-up" class="w-5 h-5"></i>
+                        <span class="font-bold uppercase tracking-widest text-sm" x-text="t('profile.returns')"></span>
+                    </div>
+                    <div class="text-4xl font-black mb-6">12.4% <span class="text-sm text-gray-500 font-normal">annually</span></div>
+                    <div class="h-24 flex items-end gap-1">
+                        <template x-for="h in [40, 60, 55, 75, 70, 85, 90]" :key="Math.random()">
+                            <div class="flex-1 bg-gradient-gold rounded-t" :style="`height: ${h}%`"></div>
+                        </template>
+                    </div>
+                </div>
+                <div class="bg-gradient-card border border-yellow-500/10 p-8 rounded-3xl text-center">
+                    <div class="flex items-center gap-2 text-yellow-500 mb-6 justify-center">
+                        <i data-lucide="flame" class="w-5 h-5"></i>
+                        <span class="font-bold uppercase tracking-widest text-sm" x-text="t('profile.streak')"></span>
+                    </div>
+                    <i data-lucide="flame" class="w-16 h-16 text-yellow-500 mx-auto mb-4 animate-glow"></i>
+                    <div class="text-5xl font-black">7 <span class="text-lg text-gray-500 font-normal" x-text="t('profile.days')"></span></div>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <button @click="page = 'tiers'" class="w-full bg-gradient-gold text-black py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform" x-text="t('profile.upgrade')"></button>
+                <button class="w-full border border-yellow-500 text-yellow-500 py-4 rounded-xl font-bold text-lg hover:bg-yellow-500/10 transition-colors" x-text="t('profile.investMore')"></button>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        function app() {
+            return {
+                lang: 'en',
+                page: 'home',
+                mobileMenu: false,
+                navItems: [
+                    { key: 'home', icon: 'home' },
+                    { key: 'tiers', icon: 'trending-up' },
+                    { key: 'training', icon: 'flame' },
+                    { key: 'assessment', icon: 'clipboard-list' },
+                    { key: 'profile', icon: 'user' }
+                ],
+                tiers: [
+                    { id: 1, icon: 'shield' },
+                    { id: 2, icon: 'trending-up' },
+                    { id: 3, icon: 'crown' }
+                ],
+                translations: {
+                    en: {
+                        'nav.home': 'Home',
+                        'nav.tiers': 'Investment Tiers',
+                        'nav.training': 'Investor Training',
+                        'nav.assessment': 'Assessment',
+                        'nav.profile': 'Profile',
+                        'home.title': 'EL VISION CAPITAL',
+                        'home.tagline': 'High Return Begins With Inner Stability',
+                        'home.description': 'EL VISION CAPITAL manages wealth through diversity and mental clarity. Our hedge fund merges psychology and finance for true stability.',
+                        'home.invest': 'Invest Now',
+                        'home.learn': 'Learn How It Works',
+                        'tiers.title': 'Investment Tiers',
+                        'tiers.tier1': 'Tier 1', 'tiers.tier2': 'Tier 2', 'tiers.tier3': 'Tier 3',
+                        'tiers.return1': '8% per year', 'tiers.return2': '12% per year', 'tiers.return3': '15% per year',
+                        'tiers.desc1': 'Safe, stable annual growth',
+                        'tiers.desc2': 'Balanced growth, moderate risk',
+                        'tiers.desc3': 'High return, elite investor access',
+                        'tiers.note': 'Although returns are high, success depends on investor alignment — calm mind, clear vision, and emotional balance.',
+                        'tiers.investBtn': 'Invest Now',
+                        'tiers.trainingBtn': 'Join Training First',
+                        'training.title': 'Investor Training',
+                        'training.description': 'Before investing, every investor joins short mental training. We believe stress, doubt, or fear directly reduce success probability. Calm focus amplifies return.',
+                        'training.quote': 'Investment success is 80% psychology, 20% mechanics.',
+                        'training.quoteAuthor': '— Ray Dalio',
+                        'training.start': 'Start Training Now',
+                        'assessment.title': 'Investor Assessment',
+                        'assessment.emotional': 'Emotional Stability',
+                        'assessment.focus': 'Focus & Presence',
+                        'assessment.clarity': 'Financial Intent Clarity',
+                        'assessment.submit': 'Complete Assessment',
+                        'assessment.reminder': 'When your mind is calm, your capital grows harmoniously.',
+                        'profile.tier': 'Current Tier',
+                        'profile.returns': 'Investment Returns',
+                        'profile.streak': 'Meditation Streak',
+                        'profile.days': 'days',
+                        'profile.upgrade': 'Upgrade Tier',
+                        'profile.investMore': 'Invest More'
+                    },
+                    id: {
+                        'nav.home': 'Beranda',
+                        'nav.tiers': 'Tingkat Investasi',
+                        'nav.training': 'Pelatihan Investor',
+                        'nav.assessment': 'Penilaian',
+                        'nav.profile': 'Profil',
+                        'home.title': 'EL VISION CAPITAL',
+                        'home.tagline': 'Keuntungan Tinggi Dimulai dari Ketenangan Batin',
+                        'home.description': 'EL VISION CAPITAL mengelola kekayaan melalui diversitas dan kejernihan mental. Dana lindung nilai kami menggabungkan psikologi dan keuangan untuk stabilitas sejati.',
+                        'home.invest': 'Investasi Sekarang',
+                        'home.learn': 'Pelajari Cara Kerjanya',
+                        'tiers.title': 'Tingkat Investasi',
+                        'tiers.tier1': 'Tingkat 1', 'tiers.tier2': 'Tingkat 2', 'tiers.tier3': 'Tingkat 3',
+                        'tiers.return1': '8% per tahun', 'tiers.return2': '12% per tahun', 'tiers.return3': '15% per tahun',
+                        'tiers.desc1': 'Pertumbuhan tahunan yang aman dan stabil',
+                        'tiers.desc2': 'Pertumbuhan seimbang, risiko sedang',
+                        'tiers.desc3': 'Keuntungan tinggi, akses investor elit',
+                        'tiers.note': 'Meskipun keuntungan tinggi, kesuksesan bergantung pada keselarasan investor — pikiran tenang, visi jelas, dan keseimbangan emosional.',
+                        'tiers.investBtn': 'Investasi Sekarang',
+                        'tiers.trainingBtn': 'Ikuti Pelatihan Dulu',
+                        'training.title': 'Pelatihan Investor',
+                        'training.description': 'Sebelum berinvestasi, setiap investor mengikuti pelatihan mental singkat. Kami percaya stres, keraguan, atau ketakutan secara langsung mengurangi probabilitas kesuksesan.',
+                        'training.quote': 'Kesuksesan investasi adalah 80% psikologi, 20% mekanik.',
+                        'training.quoteAuthor': '— Ray Dalio',
+                        'training.start': 'Mulai Pelatihan Sekarang',
+                        'assessment.title': 'Penilaian Investor',
+                        'assessment.emotional': 'Stabilitas Emosional',
+                        'assessment.focus': 'Fokus & Kehadiran',
+                        'assessment.clarity': 'Kejelasan Niat Finansial',
+                        'assessment.submit': 'Selesaikan Penilaian',
+                        'assessment.reminder': 'Ketika pikiran Anda tenang, modal Anda tumbuh dengan harmonis.',
+                        'profile.tier': 'Tingkat Saat Ini',
+                        'profile.returns': 'Keuntungan Investasi',
+                        'profile.streak': 'Rangkaian Meditasi',
+                        'profile.days': 'hari',
+                        'profile.upgrade': 'Tingkatkan Level',
+                        'profile.investMore': 'Investasi Lebih'
+                    }
+                },
+                init() {
+                    this.initStars();
+                    this.$watch('page', () => {
+                        this.$nextTick(() => lucide.createIcons());
+                        window.scrollTo(0,0);
+                    });
+                    lucide.createIcons();
+                },
+                t(key) { return this.translations[this.lang][key] || key; },
+                toggleLang() { this.lang = this.lang === 'en' ? 'id' : 'en'; },
+                initStars() {
+                    const starsContainer = document.getElementById('stars');
+                    if (!starsContainer) return;
+                    for (let i = 0; i < 50; i++) {
+                        const star = document.createElement('div');
+                        star.className = 'star';
+                        const size = Math.random() * 2 + 0.5;
+                        star.style.width = size + 'px';
+                        star.style.height = size + 'px';
+                        star.style.left = Math.random() * 100 + '%';
+                        star.style.top = Math.random() * 100 + '%';
+                        star.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                        star.style.animationDelay = Math.random() * 5 + 's';
+                        starsContainer.appendChild(star);
+                    }
+                }
+            }
+        }
+    </script>
+</body>
 </html>
